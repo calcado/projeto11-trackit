@@ -2,39 +2,38 @@ import styled from "styled-components";
 import axios from "axios";
 import Logo from "./Logo.js";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-
+import { useState } from "react";
+import { useAuth } from "../provider/auth";
+import React from "react";
 
 export default function LoginPage() {
   const [emailUser, setEmailUser] = useState("");
   const [senhaUser, setSenhaUser] = useState("");
-  const navigate = useNavigate();
-  const { user, setUser } = useState("");
-  
-  function logar (resposta) {
-    setUser(resposta);
-    navigate("/habitos");
-    console.log(user);
-  };
 
-  function FazerLogin() {
-    useEffect(() => {
-      const URL =
-        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
-      const requisicao = axios.post(URL, {
-        email: { emailUser },
-        password: { senhaUser },
-      });
-      requisicao.then((resposta) => logar(resposta));
-      
-      requisicao.catch((erro) => console.log(erro.data));
-    }, []);
+  const navigate = useNavigate();
+  const { user, setUser } = useAuth();
+
+  function logar(r) {
+    setUser(r);
+    localStorage.setItem("user", JSON.stringify(r));
+    navigate("/habitos");
+  }
+
+  function fazerLogin(e) {
+    e.preventDefault();
+    const URL =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
+    const body = { email: emailUser, password: senhaUser };
+
+    const requisicao = axios.post(URL, body);
+    requisicao.then((response) => logar(response.data));
+    requisicao.catch((erro) => console.log(erro.response.data.message));
   }
 
   return (
     <LoginPageLayout>
       <Logo />
-      <Form onSubmit={FazerLogin}>
+      <Form onSubmit={fazerLogin}>
         <LayoutInput
           type="email"
           placeholder="email"

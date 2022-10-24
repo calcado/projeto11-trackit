@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import React from "react";
-
+import Navbar from "./Navbar";
+import Footer
+ from "./Footer";
 export default function History(){
 
     return(
 
         <HistoryPage>
+        <Navbar/>
         <Titulo>Histórico</Titulo>
         <Span>Em breve você poderá ver o histórico dos seus hábitos aqui</Span>
+        <Footer/>
         </HistoryPage>
         
     )
@@ -18,8 +22,12 @@ const HistoryPage = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
+  position: relative;
   background-color: #e5e5e5;
+  width: 100%;
+  height: 875px;
+  
 `;
 
 const Span = styled.span`
@@ -35,4 +43,5 @@ const Titulo = styled.h1`
   font-weight: 400;
   font-size: 23px;
   color: #126ba5;
+  margin-bottom: 20px;
 `;

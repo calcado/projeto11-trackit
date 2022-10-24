@@ -20,7 +20,7 @@ const FooterLayout = styled.footer`
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  position: relative;
+  position: absolute;
   bottom: 0;
   
 `;

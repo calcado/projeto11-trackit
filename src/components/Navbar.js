@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import React from "react";
+import { useAuth } from "../provider/auth"; 
 
 export default function Navbar() {
+  const {user} = useAuth();
   return (
     <Header>
       <p>TrackIt</p>
-      <Avatar src="" alt="" />
+      <Avatar src= {user.image} alt="" />
     </Header>
   );
 }
@@ -17,7 +19,7 @@ const Header = styled.header`
   background-color: #126ba5;
   width: 375px;
   height: 70px;
-  position: fixed;
+  position: absolute;
   top: 0;
   p{
   font-family: "Playball", cursive;

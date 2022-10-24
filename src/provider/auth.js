@@ -1,16 +1,16 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 
-export const AuthContext = createContext({});
-export const useAuth = () => React.useContext(AuthContext);
+const AuthContext = createContext({});
+
 export const AuthProvider = (props) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     const userStorage = localStorage.getItem("user");
     if (userStorage) {
       setUser(JSON.parse(userStorage));
     } else {
-      setUser({});
+      setUser(undefined);
     }
   }, []);
 
@@ -21,3 +21,4 @@ export const AuthProvider = (props) => {
   );
 };
 
+export const useAuth = () => useContext(AuthContext);

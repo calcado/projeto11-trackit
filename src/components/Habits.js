@@ -1,23 +1,30 @@
 import styled from "styled-components";
 import React from "react";
-import Navbar from "./Navbar.js"
-import Footer from "./Footer.js"
-
+import Navbar from "./Navbar.js";
+import Footer from "./Footer.js";
+import NovoHabito from "./NovoHabito.js";
+import { useAuth } from "../provider/auth.js";
 export default function Habits() {
-  const texto = "Você não tem nenhum hábito cadastrado ainda.Adicione um hábito para começar a trackear!"
-  return (
-    <HabitPage>
-      <Navbar />
-      <Habitos>
-        <p>Meus hábitos</p>
-        <Button></Button>
-      </Habitos>
-      <Span>
-        {texto}
-      </Span>
-      <Footer />
-    </HabitPage>
-  );
+  const { user } = useAuth();
+  const texto =
+    "Você não tem nenhum hábito cadastrado ainda.Adicione um hábito para começar a trackear!";
+  if (user === undefined){
+    return(
+      <div>Carregando</div>
+    )
+  }
+    return (
+      <HabitPage>
+        <Navbar />
+        <Habitos>
+          <Titulo>Meus hábitos</Titulo>
+          <Criar>+</Criar>
+        </Habitos>
+        <NovoHabito />
+        <Span>{texto}</Span>
+        <Footer />
+      </HabitPage>
+    );
 }
 
 const HabitPage = styled.main`
@@ -27,46 +34,41 @@ const HabitPage = styled.main`
   align-items: center;
   background-color: #e5e5e5;
   width: 100%;
-  height: auto;
+  height: 100%;
+  position: relative;
+`;
+const Titulo = styled.span`
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+  color: #126ba5;
 `;
 
 const Habitos = styled.div`
   margin-top: 100px;
-  margin-bottom: 28px;
-  margin-left: 17px;
-  margin-right: 18px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
   height: 40px;
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  p {
-    font-family: "Lexend Deca", cursive;
-    font-weight: 400;
-    font-size: 23px;
-    color: #126ba5;
-  }
 `;
 
-const Button = styled.button`
+const Criar = styled.button`
   background-color: #52b6ff;
   color: #ffffff;
   height: 35px;
   width: 40px;
+  font-size: 20px;
 `;
 
 const Span = styled.span`
   width: 338px;
   height: 74px;
-  font-family: "Lexend Deca", cursive;
+  font-family: "Lexend Deca", sans-serif;
   font-weight: 400;
   font-size: 18px;
   color: #666666;
-`;
-
-const NovoHabito = styled.div`
-  background-color: #ffffff;
-  width: 340px;
-  height: 180px;
-  border-radius: 5px;
 `;
