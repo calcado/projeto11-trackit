@@ -1,12 +1,20 @@
 import axios from "axios";
-import { key } from "localforage";
+import { config, key } from "localforage";
 import { useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "../provider/auth";
 
-export default function NovoHabito() {
+export default function NovoHabito({
+  setClick,
+  form,
+  setForm,
+  clicado,
+  setClicado,
+  adicionou,
+  setAdicionar,
+}) {
+  const { user } = useAuth();
   const dias = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const [clicado, setClicado] = useState([]);
-  const [novoHabito, setNovoHabito] = useState("");
 
   function clicar(indice) {
     if (clicado.includes(indice)) {
@@ -18,16 +26,28 @@ export default function NovoHabito() {
       setClicado([...clicado, indice]);
     }
   }
-  console.log(clicado);
-  console.log(novoHabito);
 
+  function salvar() {
+    const body = { ...form, days: clicado };
+    console.log(body);
+    const URL =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+    const config = { headers: { Authorization: `Bearer ${user.token}` } };
+    const requisicao = axios.post(URL, body, config);
+    requisicao.then((response) =>setAdicionar(!adicionou) );
+    requisicao.catch((erro) => console.log(erro.response.data.message));
+    setClicado("");
+    setForm("");
+    setClick(false);
+    
+  }
   return (
     <Habito>
       <Input
         type="text"
         placeholder="nome do hábito"
-        value={novoHabito}
-        onChange={(e) => setNovoHabito(e.target.value)}
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
         required
       />
       <DiasDaSemanas>
@@ -44,8 +64,10 @@ export default function NovoHabito() {
         ))}
       </DiasDaSemanas>
       <Buttons>
-        <Cancelar onClick={() => alert("olá")}>Cancelar</Cancelar>
-        <Salvar onClick={() => alert("olá")}>Salvar</Salvar>
+        <Cancelar onClick={() => setClick(false)}>Cancelar</Cancelar>
+        <Salvar type="submit" onClick={salvar}>
+          Salvar
+        </Salvar>
       </Buttons>
     </Habito>
   );
@@ -73,7 +95,6 @@ const Input = styled.input`
   margin-top: 18px;
   margin-bottom: 8px;
   color: #dbdbdb;
-  
 `;
 const DiasDaSemanas = styled.div`
   display: flex;
@@ -88,8 +109,10 @@ const DiaBox = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${props => props.clicado.includes(props.indice) ? "#FFFFFF": "#dbdbdb"};
-  background-color: ${props =>props.clicado.includes(props.indice) ? "#CFCFCF":"#FFFFFF"};
+  color: ${(props) =>
+    props.clicado.includes(props.indice) ? "#FFFFFF" : "#dbdbdb"};
+  background-color: ${(props) =>
+    props.clicado.includes(props.indice) ? "#CFCFCF" : "#FFFFFF"};
 `;
 
 const Buttons = styled.div`
@@ -115,7 +138,7 @@ const Cancelar = styled.div`
   align-items: center;
 `;
 
-const Salvar = styled.div`
+const Salvar = styled.button`
   height: 35px;
   width: 84px;
   background-color: #52b6ff;

@@ -1,17 +1,29 @@
 import styled from "styled-components";
 import React from "react";
-
+import { Link, useNavigate } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { usePercentual } from "../provider/percentual";
 export default function Footer() {
+  const { percentual, setTarefas, setRealizada,porcento } = usePercentual();
+  
   return (
     <FooterLayout>
-      <TextoAzul>Hábitos</TextoAzul>
-      <Bola>
-        <TextoBranco>Hoje</TextoBranco>
-      </Bola>
-      <TextoAzul>Histórico</TextoAzul>
+      <Link to="/habitos">
+        <TextoAzul>Hábitos</TextoAzul>
+      </Link>
+      <Link to="/hoje">
+        <Bola>
+      <CircularProgressbar value={porcento} maxValue={1} text={"Hoje"} />;
+        </Bola>
+      </Link>
+      <Link to="/historico">
+        <TextoAzul>Histórico</TextoAzul>
+      </Link>
     </FooterLayout>
   );
 }
+// styles={buildStyles({width:'91px', height:'91px', textcolor:'#FFFFFF',pathColor:'#FFFFFF', textSize:'18px', backgroundColor:'#52B6FF' })}
 
 const FooterLayout = styled.footer`
   width: 375px;
@@ -22,7 +34,6 @@ const FooterLayout = styled.footer`
   background-color: #ffffff;
   position: absolute;
   bottom: 0;
-  
 `;
 
 const TextoAzul = styled.p`
@@ -38,7 +49,6 @@ const TextoBranco = styled.p`
   font-size: 18px;
   color: #ffffff;
   position: absolute;
- 
 `;
 
 const Bola = styled.div`

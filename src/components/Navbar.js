@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import React from "react";
 import { useAuth } from "../provider/auth"; 
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const {user} = useAuth();
   return (
     <Header>
-      <p>TrackIt</p>
-      <Avatar src= {user.image} alt="" />
+      <Link to="/">
+        <p>TrackIt</p>
+      </Link>
+      <Avatar src={user.image} alt="" />
     </Header>
   );
 }

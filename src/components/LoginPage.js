@@ -16,7 +16,7 @@ export default function LoginPage() {
   function logar(r) {
     setUser(r);
     localStorage.setItem("user", JSON.stringify(r));
-    navigate("/habitos");
+    navigate("/hoje");
   }
 
   function fazerLogin(e) {

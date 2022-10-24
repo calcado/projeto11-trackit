@@ -8,11 +8,12 @@ import Habits from "./Habits.js";
 import Today from "./Today.js";
 import History from "./History.js";
 import { AuthProvider } from "../provider/auth";
-
+import { PercentualProvider } from "../provider/percentual";
 export default function App() {
   return (
     <MobileLayout>
       <AuthProvider>
+        <PercentualProvider>
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/historico" element={<History />}></Route>
           </Routes>
         </BrowserRouter>
+        </PercentualProvider>
       </AuthProvider>
     </MobileLayout>
   );
