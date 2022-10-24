@@ -1,37 +1,36 @@
 import styled from "styled-components";
 import axios from "axios";
 import Logo from "./Logo.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useState, CSSProperties } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 
 export default function SignPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [nome, setNome] = useState("");
   const [foto, setFoto] = useState("");
+  const navigate = useNavigate();
 
-  function FazerCadastro() {
-    useEffect(() => {
-      const requisicao = axios.post(
-        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-        {
-          email: { email },
-          name: { nome },
-          image: { foto },
-          password: { senha },
-        }
-      );
-      requisicao.then((r)=>console.log(r));
-      requisicao.catch((erro)=>console.log(erro.data));
-    }, []);
+  function fazerCadastro(e) {
+    e.preventDefault();
+    const requisicao = axios.post(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+      {
+        email: email,
+        name: nome,
+        image: foto,
+        password: senha,
+      }
+    );
+    requisicao.then((r) => navigate("/"));
+    requisicao.catch((erro) => console.log(erro.data));
+    
   }
 
   return (
     <LoginPageLayout>
       <Logo />
-      <Form onSubmit={FazerCadastro}>
+      <Form onSubmit={fazerCadastro}>
         <LayoutInput
           type="email"
           placeholder="email"

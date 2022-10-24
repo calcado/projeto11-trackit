@@ -1,12 +1,21 @@
 import styled from "styled-components";
 import axios from "axios";
 import Logo from "./Logo.js";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+
 
 export default function LoginPage() {
   const [emailUser, setEmailUser] = useState("");
   const [senhaUser, setSenhaUser] = useState("");
+  const navigate = useNavigate();
+  const { user, setUser } = useState("");
+  
+  function logar (resposta) {
+    setUser(resposta);
+    navigate("/habitos");
+    console.log(user);
+  };
 
   function FazerLogin() {
     useEffect(() => {
@@ -16,8 +25,9 @@ export default function LoginPage() {
         email: { emailUser },
         password: { senhaUser },
       });
-      requisicao.then((r)=>console.log(r))
-      requisicao.catch((erro)=>console.log(erro.data))
+      requisicao.then((resposta) => logar(resposta));
+      
+      requisicao.catch((erro) => console.log(erro.data));
     }, []);
   }
 
