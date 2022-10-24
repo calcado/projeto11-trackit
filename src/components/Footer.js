@@ -13,8 +13,17 @@ export default function Footer() {
         <TextoAzul>Hábitos</TextoAzul>
       </Link>
       <Link to="/hoje">
-        <Bola>
-      <CircularProgressbar value={porcento} maxValue={1} text={"Hoje"} />;
+       <Bola> 
+      <CircularProgressbar  value={porcento}
+        text="Hoje"
+        background
+        backgroundPadding={6}
+        styles={buildStyles({
+          backgroundColor: "#3e98c7",
+          textColor: "#fff",
+          pathColor: "#fff",
+          trailColor: "transparent"
+        })} />
         </Bola>
       </Link>
       <Link to="/historico">
@@ -23,7 +32,7 @@ export default function Footer() {
     </FooterLayout>
   );
 }
-// styles={buildStyles({width:'91px', height:'91px', textcolor:'#FFFFFF',pathColor:'#FFFFFF', textSize:'18px', backgroundColor:'#52B6FF' })}
+
 
 const FooterLayout = styled.footer`
   width: 375px;
@@ -53,6 +62,7 @@ const TextoBranco = styled.p`
 
 const Bola = styled.div`
   background-color: #52b6ff;
+  color: #FFFFFF;
   width: 91px;
   height: 91px;
   border-radius: 50%;
