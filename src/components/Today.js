@@ -84,8 +84,8 @@ export default function Today() {
           <Atividade key={id}>
             <Info>
               <Titulo>{tarefa.name}</Titulo>
-              <Sequencia>Sequência atual:</Sequencia>
-              <Sequencia>Seu recorde:</Sequencia>
+              <Sequencia>Sequência atual: 5 dias</Sequencia>
+              <Sequencia>Seu recorde: 5 dias</Sequencia>
             </Info>
             <Icon
               onClick={() => feito(tarefa.id, tarefa.done)}
