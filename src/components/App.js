@@ -33,4 +33,5 @@ export default function App() {
 const MobileLayout = styled.div`
   width: 375px;
   height: 667px;
+  margin: 0 auto;
 `;
